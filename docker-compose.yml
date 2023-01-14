@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  postgres:
+    container_name: postgres
+    restart: always
+    ports:
+      - "5431:5432"
+    environment:
+      - POSTGRES_PASSWORD=qwerty
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=postgres
+    image: postgres:latest
+    volumes:
+      - ./schema/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  user-store:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    restart: always
+    command: ./user-store
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
