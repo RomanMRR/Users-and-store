@@ -87,7 +87,7 @@ func (s *server) handleUsersCreate() http.HandlerFunc {
 		Name       string `json:"name"`
 		Surname    string `json:"surname"`
 		Patronymic string `json:"patronymic"`
-		Age        int16  `json:"a`
+		Age        int16  `json:"age"`
 	}
 
 	return func(w http.ResponseWriter, r *http.Request) {
@@ -98,10 +98,11 @@ func (s *server) handleUsersCreate() http.HandlerFunc {
 		}
 
 		u := &model.User{
-			Name:       req.Name,
-			Surname:    req.Surname,
-			Patronymic: req.Patronymic,
-			Age:        req.Age,
+			Name:              req.Name,
+			Surname:           req.Surname,
+			Patronymic:        req.Patronymic,
+			Age:               req.Age,
+			Registration_date: time.Now(),
 		}
 
 		if err := s.store.GetRepository().Create(u); err != nil {

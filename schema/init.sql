@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS users  (
     registrations_date TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE IF NOT EXISTS stores  (
+CREATE TABLE IF NOT EXISTS shops  (
     id bigserial not null primary key,
     name varchar not null,
     address varchar not null,
