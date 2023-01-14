@@ -8,6 +8,7 @@ import (
 )
 
 const Layout = "2006-01-02"
+const UserTable = "users"
 
 type User struct {
 	ID                int       `json:"id"`

@@ -5,6 +5,8 @@ import (
 	"github.com/pkg/errors"
 )
 
+const ShopTable = "shops"
+
 type Shop struct {
 	ID      int    `json:"id"`
 	Name    string `json:"name"`

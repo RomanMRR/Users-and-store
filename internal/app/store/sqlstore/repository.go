@@ -9,12 +9,12 @@ import (
 	"strings"
 )
 
-// Repository ...
+// Repository devinition
 type Repository struct {
 	store *Store
 }
 
-// Create ...
+// Create new data
 func (r *Repository) Create(data store.Data) error {
 
 	if err := data.Validate(); err != nil {
@@ -23,16 +23,18 @@ func (r *Repository) Create(data store.Data) error {
 
 	u, ok := data.(*model.User)
 	if ok {
+		query := fmt.Sprintf("INSERT INTO %s (name, surname, patronymic, age) VALUES ($1, $2, $3, $4) RETURNING id", model.UserTable)
 		return r.store.db.QueryRow(
-			"INSERT INTO users (name, surname, patronymic, age) VALUES ($1, $2, $3, $4) RETURNING id",
+			query,
 			u.Name,
 			u.Surname,
 			u.Patronymic,
 			u.Age,
 		).Scan(&u.ID)
 	} else if s, ok := data.(*model.Shop); ok {
+		query := fmt.Sprintf("INSERT INTO %s (name, surname, patronymic, age) VALUES ($1, $2, $3, $4) RETURNING id", model.ShopTable)
 		return r.store.db.QueryRow(
-			"INSERT INTO shops (name, address, working, owner) VALUES ($1, $2, $3, $4) RETURNING id",
+			query,
 			s.Name,
 			s.Address,
 			s.Working,
@@ -44,7 +46,7 @@ func (r *Repository) Create(data store.Data) error {
 
 }
 
-// Update ...
+// Update data
 func (r *Repository) Update(data store.Data) error {
 	setValues := make([]string, 0)
 	args := make([]interface{}, 0)
@@ -76,7 +78,7 @@ func (r *Repository) Update(data store.Data) error {
 
 		setQuery := strings.Join(setValues, ", ")
 		args = append(args, u.ID)
-		query := fmt.Sprintf("UPDATE users SET %s WHERE id = $%d RETURNING id", setQuery, argId)
+		query := fmt.Sprintf("UPDATE %s SET %s WHERE id = $%d RETURNING id", model.UserTable, setQuery, argId)
 		fmt.Println(query)
 		fmt.Println(args...)
 		return r.store.db.QueryRow(
@@ -109,7 +111,7 @@ func (r *Repository) Update(data store.Data) error {
 
 		setQuery := strings.Join(setValues, ", ")
 		args = append(args, shop.ID)
-		query := fmt.Sprintf("UPDATE shops SET %s WHERE id = $%d RETURNING id", setQuery, argId)
+		query := fmt.Sprintf("UPDATE %s SET %s WHERE id = $%d RETURNING id", model.ShopTable, setQuery, argId)
 		fmt.Println(query)
 		fmt.Println(args...)
 		return r.store.db.QueryRow(
@@ -186,61 +188,3 @@ func (r *Repository) Find(whatLookingFor string, tableName string) ([]store.Data
 	}
 
 }
-
-// // Find for month ...
-// func (r *EventRepository) FindForMonth(month, year string, user_id int) ([]model.Event, error) {
-// 	e := &model.Event{}
-// 	rows, err := r.store.db.Query(
-// 		"SELECT id, user_id, name, date FROM events WHERE extract(month from date) = $1 AND extract(year from date) = $2 and user_id = $3",
-// 		month,
-// 		year,
-// 		user_id,
-// 	)
-// 	if err != nil {
-// 		if err == sql.ErrNoRows {
-// 			return nil, store.ErrRecordNotFound
-// 		}
-
-// 	}
-
-// 	var events []model.Event
-
-// 	for rows.Next() {
-// 		err := rows.Scan(&e.ID, &e.User_id, &e.Name, &e.Date)
-// 		if err != nil {
-// 			return nil, err
-// 		}
-// 		events = append(events, *e)
-// 	}
-
-// 	return events, nil
-// }
-
-// // Find for week ...
-// func (r *EventRepository) FindForWeek(week, year string, user_id int) ([]model.Event, error) {
-// 	e := &model.Event{}
-// 	rows, err := r.store.db.Query(
-// 		"SELECT id, user_id, name, date FROM events WHERE extract(week from date) = $1 AND extract(year from date) = $2 and user_id = $3",
-// 		week,
-// 		year,
-// 		user_id,
-// 	)
-// 	if err != nil {
-// 		if err == sql.ErrNoRows {
-// 			return nil, store.ErrRecordNotFound
-// 		}
-
-// 	}
-
-// 	var events []model.Event
-
-// 	for rows.Next() {
-// 		err := rows.Scan(&e.ID, &e.User_id, &e.Name, &e.Date)
-// 		if err != nil {
-// 			return nil, err
-// 		}
-// 		events = append(events, *e)
-// 	}
-
-// 	return events, nil
-// }

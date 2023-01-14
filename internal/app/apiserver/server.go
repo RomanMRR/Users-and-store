@@ -78,8 +78,6 @@ func (s *server) configureRouter() {
 	s.router.HandleFunc("/delete_shop", s.handleShopsDelete()).Methods("DELETE")
 	s.router.HandleFunc("/find_user", s.handleUserFind()).Methods("GET")
 	s.router.HandleFunc("/find_shop", s.handleShopFind()).Methods("GET")
-	// s.router.HandleFunc("/event_for_month", s.handleEventForMonth()).Methods("GET")
-	// s.router.HandleFunc("/event_for_week", s.handleEventForWeek()).Methods("GET")
 }
 
 func (s *server) handleUsersCreate() http.HandlerFunc {
@@ -193,7 +191,7 @@ func (s *server) handleUsersDelete() http.HandlerFunc {
 
 		var id int = req.ID
 
-		if err := s.store.GetRepository().Delete(id, "users"); err != nil {
+		if err := s.store.GetRepository().Delete(id, model.UserTable); err != nil {
 			s.error(w, r, http.StatusUnprocessableEntity, err)
 			return
 		}
@@ -216,7 +214,7 @@ func (s *server) handleShopsDelete() http.HandlerFunc {
 
 		var id int = req.ID
 
-		if err := s.store.GetRepository().Delete(id, "shops"); err != nil {
+		if err := s.store.GetRepository().Delete(id, model.ShopTable); err != nil {
 			s.error(w, r, http.StatusUnprocessableEntity, err)
 			return
 		}
@@ -268,35 +266,3 @@ func (s *server) handleShopFind() http.HandlerFunc {
 
 	}
 }
-
-// func (s *server) handleEventForMonth() http.HandlerFunc {
-// 	return func(w http.ResponseWriter, r *http.Request) {
-// 		user_id, _ := strconv.Atoi(r.URL.Query().Get("user_id"))
-// 		month := r.URL.Query().Get("month")
-// 		year := r.URL.Query().Get("year")
-
-// 		e, err := s.store.Event().FindForMonth(month, year, user_id)
-// 		if err != nil {
-// 			s.error(w, r, http.StatusServiceUnavailable, err)
-// 			return
-// 		}
-// 		s.respond(w, r, http.StatusOK, e)
-
-// 	}
-// }
-
-// func (s *server) handleEventForWeek() http.HandlerFunc {
-// 	return func(w http.ResponseWriter, r *http.Request) {
-// 		user_id, _ := strconv.Atoi(r.URL.Query().Get("user_id"))
-// 		week := r.URL.Query().Get("week")
-// 		year := r.URL.Query().Get("year")
-
-// 		e, err := s.store.Event().FindForWeek(week, year, user_id)
-// 		if err != nil {
-// 			s.error(w, r, http.StatusServiceUnavailable, err)
-// 			return
-// 		}
-// 		s.respond(w, r, http.StatusOK, e)
-
-// 	}
-// }
