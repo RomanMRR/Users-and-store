@@ -1,3 +1,3 @@
 DROP TABLE users;
-DROP TABLE stores;
+DROP TABLE shops;
 
