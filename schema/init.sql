@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS users  (
 
 CREATE TABLE IF NOT EXISTS shops  (
     id bigserial not null primary key,
-    name varchar not null,
+    name varchar unique not null,
     address varchar not null,
     working bool not null,
     owner varchar

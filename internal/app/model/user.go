@@ -33,7 +33,8 @@ func (u *User) Validate() error {
 	return validation.ValidateStruct(
 		u,
 		validation.Field(&u.Name, validation.Required, validation.Length(2, 100)),
-		validation.Field(&u.Age, validation.Required, validation.Min(4), validation.Max(200)),
+		validation.Field(&u.Age, validation.Min(4), validation.Max(200)),
+		validation.Field(&u.Patronymic, validation.Required),
 		validation.Field(&u.Surname, validation.Required),
 	)
 }
