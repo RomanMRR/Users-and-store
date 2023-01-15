@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS users  (
     surname varchar not null,
     patronymic varchar not null,
     age smallint,
-    registrations_date TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+    registration_date TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS shops  (

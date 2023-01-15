@@ -71,8 +71,8 @@ func (r *Repository) Update(data store.Data) error {
 		}
 
 		if u.Registration_date != nil {
-			setValues = append(setValues, fmt.Sprintf("patronymic=$%d", argId))
-			args = append(args, u.Patronymic)
+			setValues = append(setValues, fmt.Sprintf("registration_date=$%d", argId))
+			args = append(args, u.Registration_date)
 			argId++
 		}
 
