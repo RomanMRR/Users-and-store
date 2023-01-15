@@ -61,9 +61,10 @@ owner | строка | нет | владелец
 Пример запроса для магазина:
 ```javascript
 {
-    "name": "Maksim",
-    "username": "Maksimka",
-    "password": "qwerty"
+    "name": "Wildberries",
+    "address": "Prospect street",
+    "Working": true,
+    "Owner": "boss"
 }
 ```
 
