@@ -1,25 +1,30 @@
 package teststore
 
-// Store ...
+import (
+	"http-rest-api/internal/app/model"
+	"http-rest-api/internal/app/store"
+)
+
+// Store definition
 type Store struct {
-	eventRepository *EventRepository
+	repository *Repository
 }
 
-// New ...
+// New Store
 func New() *Store {
 	return &Store{}
 }
 
-// Event ...
-// func (s *Store) Event() store.Repository {
-// 	if s.eventRepository != nil {
-// 		return s.eventRepository
-// 	}
+// Get repostory
+func (s *Store) GetRepository() store.Repository {
+	if s.repository != nil {
+		return s.repository
+	}
 
-// 	s.eventRepository = &EventRepository{
-// 		store:  s,
-// 		events: make(map[time.Time]*model.Event),
-// 	}
+	s.repository = &Repository{
+		store: s,
+		users: make(map[int]*model.User),
+	}
 
-// 	return s.eventRepository
-// }
+	return s.repository
+}

@@ -5,8 +5,8 @@ import (
 	"time"
 )
 
-// Test Event ...
-func TestEvent(t *testing.T) *User {
+// Create and return Test User ...
+func TestUser(t *testing.T) *User {
 	var datetime = time.Date(2022, time.January, 1, 0, 0, 0, 0, time.UTC)
 	return &User{
 		Name:              "Roman",

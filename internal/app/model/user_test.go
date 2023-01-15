@@ -16,14 +16,14 @@ func TestUser_Validate(t *testing.T) {
 		{
 			name: "valid",
 			u: func() *model.User {
-				return model.TestEvent(t)
+				return model.TestUser(t)
 			},
 			isValid: true,
 		},
 		{
 			name: "Big age",
 			u: func() *model.User {
-				u := model.TestEvent(t)
+				u := model.TestUser(t)
 				u.Age = 396
 				return u
 			},
@@ -32,7 +32,7 @@ func TestUser_Validate(t *testing.T) {
 		{
 			name: "empty name",
 			u: func() *model.User {
-				u := model.TestEvent(t)
+				u := model.TestUser(t)
 				u.Name = ""
 				return u
 			},
@@ -41,7 +41,7 @@ func TestUser_Validate(t *testing.T) {
 		{
 			name: "short name",
 			u: func() *model.User {
-				e := model.TestEvent(t)
+				e := model.TestUser(t)
 				e.Name = "s"
 				return e
 			},

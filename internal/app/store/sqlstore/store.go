@@ -7,13 +7,13 @@ import (
 	_ "github.com/lib/pq"
 )
 
-// Store ...
+// Store definition
 type Store struct {
 	db         *sql.DB
 	repository *Repository
 }
 
-// New ...
+// New store
 func New(db *sql.DB) *Store {
 	return &Store{
 		db: db,

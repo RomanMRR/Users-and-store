@@ -4,7 +4,7 @@ type Data interface {
 	Validate() error
 }
 
-// Repository ...
+// Repository  interface
 type Repository interface {
 	Create(Data) error
 	Update(Data) error

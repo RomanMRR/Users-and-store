@@ -7,7 +7,7 @@ import (
 	"testing"
 )
 
-// TestDB ...
+// Create TestDB
 func TestDB(t *testing.T, databaseURL string) (*sql.DB, func(...string)) {
 	t.Helper()
 

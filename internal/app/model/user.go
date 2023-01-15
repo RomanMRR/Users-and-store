@@ -38,7 +38,7 @@ func (u *User) Validate() error {
 	)
 }
 
-// Validate model user ...
+// Validate incoming request with...
 func (i *UpdateUserInput) Validate() error {
 	if i.Name == nil && i.Surname == nil && i.Patronymic == nil && i.Age == nil && i.Registration_date == nil {
 		return errors.New("User update structure has no values")
