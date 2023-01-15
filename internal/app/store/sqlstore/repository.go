@@ -119,7 +119,7 @@ func (r *Repository) Update(data store.Data) error {
 		).Scan(&shop.ID)
 	}
 
-	return errors.New("")
+	return errors.New("There is no suitable type")
 
 }
 
@@ -135,7 +135,7 @@ func (r *Repository) Delete(id int, tableName string) error {
 // Find data ...
 func (r *Repository) Find(whatLookingFor string, tableName string) ([]store.Data, error) {
 
-	if tableName == "users" {
+	if tableName == model.UserTable {
 		u := &model.User{}
 		query := fmt.Sprintf("SELECT * FROM %s WHERE surname = $1", tableName)
 		rows, err := r.store.db.Query(

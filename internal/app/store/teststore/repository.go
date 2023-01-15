@@ -43,11 +43,40 @@ func (r *Repository) Find(whatLookingFor string, tableName string) ([]store.Data
 }
 
 func (r *Repository) Delete(id int, tableName string) error {
-	//TODO
-	return nil
+	if _, ok := r.users[id]; !ok {
+		return errors.New("No rows in result set")
+	} else {
+		delete(r.users, id)
+
+		return nil
+	}
+
 }
 
 func (r *Repository) Update(data store.Data) error {
-	//TODO
-	return nil
+	if u, ok := data.(*model.UpdateUserInput); ok {
+		if _, ok := r.users[*u.ID]; !ok {
+			return errors.New("No rows in result set")
+		}
+
+		if u.Name != nil {
+			r.users[*u.ID].Name = *u.Name
+		}
+
+		if u.Age != nil {
+			r.users[*u.ID].Age = *u.Age
+		}
+
+		if u.Patronymic != nil {
+			r.users[*u.ID].Patronymic = *u.Patronymic
+		}
+
+		if u.Registration_date != nil {
+			r.users[*u.ID].Registration_date = *u.Registration_date
+		}
+
+		return nil
+	}
+
+	return errors.New("There is no suitable type")
 }

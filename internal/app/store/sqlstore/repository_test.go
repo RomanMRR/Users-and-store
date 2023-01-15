@@ -29,3 +29,34 @@ func TestRepository_FindBySurname(t *testing.T) {
 	assert.NoError(t, err)
 	assert.NotNil(t, u2)
 }
+
+func TestRepository_Delete(t *testing.T) {
+	db, teardown := sqlstore.TestDB(t, databaseURL)
+	defer teardown(model.UserTable)
+
+	s := sqlstore.New(db)
+	u1 := model.TestUser(t)
+	err := s.GetRepository().Delete(u1.ID, model.UserTable)
+	assert.Error(t, err)
+	s.GetRepository().Create(u1)
+	err = s.GetRepository().Delete(u1.ID, model.UserTable)
+	assert.NoError(t, err)
+}
+
+func TestRepository_Update(t *testing.T) {
+	db, teardown := sqlstore.TestDB(t, databaseURL)
+	defer teardown(model.UserTable)
+
+	s := sqlstore.New(db)
+	u1 := model.TestUser(t)
+	newAge := int16(20)
+	userUpdate := model.UpdateUserInput{
+		ID:  &u1.ID,
+		Age: &newAge,
+	}
+	err := s.GetRepository().Update(&userUpdate)
+	assert.Error(t, err)
+	s.GetRepository().Create(u1)
+	err = s.GetRepository().Update(&userUpdate)
+	assert.NoError(t, err)
+}
