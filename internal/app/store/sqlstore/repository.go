@@ -32,7 +32,7 @@ func (r *Repository) Create(data store.Data) error {
 			u.Age,
 		).Scan(&u.ID)
 	} else if s, ok := data.(*model.Shop); ok {
-		query := fmt.Sprintf("INSERT INTO %s (name, surname, patronymic, age) VALUES ($1, $2, $3, $4) RETURNING id", model.ShopTable)
+		query := fmt.Sprintf("INSERT INTO %s (name, address, working, owner) VALUES ($1, $2, $3, $4) RETURNING id", model.ShopTable)
 		return r.store.db.QueryRow(
 			query,
 			s.Name,
